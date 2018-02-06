@@ -52,28 +52,23 @@
             if (inputunit == "inch") {
                 if (outputunit == "inch"){
                     var outputvalue = inputvalue
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "feet"){
                     var outputvalue = inputvalue / 12
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "yard"){
                     var outputvalue = inputvalue * .0277778
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "mile"){
                     var outputvalue = inputvalue * .000015783
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "meter"){
                     var outputvalue = inputvalue * .0254
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "km"){
                     var outputvalue = inputvalue * .0000254
-                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
+                document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
             }
             if (inputunit == "feet") {
                 if (outputunit == "inch"){
