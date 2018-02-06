@@ -41,7 +41,7 @@
     </div>
     
     <br>
-    <div id="result"></div>
+    <div id="result" align="center"></div>
     
     <script>
         function convert() {
@@ -52,7 +52,7 @@
             if (inputunit == "inch") {
                 if (outputunit == "inch"){
                     var outputvalue = inputvalue
-                    document.getElementById("result").innerHTML = outputvalue;
+                    document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
                 }
                 if (outputunit == "feet"){
                     var outputvalue = inputvalue / 12
@@ -85,7 +85,7 @@
                     document.getElementById("result").innerHTML = outputvalue;
                 }
                 if (outputunit == "yard"){
-                    var outputvalue = inputvalue * .3333
+                    var outputvalue = inputvalue / 3
                     document.getElementById("result").innerHTML = outputvalue;
                 }
                 if (outputunit == "mile"){
