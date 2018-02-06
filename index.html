@@ -48,9 +48,8 @@
             var inputvalue = parseFloat(document.getElementById("inputvalue").value)
             var inputunit = document.getElementById("inputunit").value
             var outputunit = document.getElementById("outputunit").value
-            alert(inputvalue)
             
-            if (inputvalue == "inch") {
+            if (inputunit == "inch") {
                 if (outputunit == "inch"){
                     var outputvalue = inputvalue
                     document.getElementById("result").innerHTML = outputvalue;
