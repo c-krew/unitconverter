@@ -25,7 +25,7 @@
 
     <h2 align="center">TO</h2>
 
-    <div id="'output" align="center">
+    <div id="output" align="center">
         <select name="outputunit">
             <option value="inch">Inch</option>
             <option value="feet">Feet</option>
@@ -39,6 +39,24 @@
     <div align="center">
         <button id="compute" onclick="convert()">Convert</button>
     </div>
+    
+    <br>
+    <div id="result"></div>
+    
+    <script>
+        function convert() {
+            var inputvalue = parseFloat(document.getElementById("inputvalue").value)
+            var inputunit = document.getElementById("inputunit").value
+            var outputunit = document.getElementById("outputunit").value
+            
+            if (inputvalue == "inch") {
+                if (outputunit == "inch"){
+                    var outputvalue = inputvalue
+                    document.getElementById("result").innerHTML = outputvalue;
+                }
+            }
+            
+    </script>
         
 </body>
 </html>
