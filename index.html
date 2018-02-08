@@ -42,6 +42,7 @@
     
     <br>
     <div id="result" align="center"></div>
+    <div id="success" align="center"></div>
     
     <script>
         function convert() {
@@ -69,6 +70,7 @@
                     var outputvalue = inputvalue * .0000254
                 }
                 document.getElementById("result").innerHTML = inputvalue + " " + inputunit + " = " + outputvalue + " " +outputunit;
+                document.getElementById("success").innerHTML = '<img src="https://btu.org/wp-content/uploads/2016/01/mathrocks-small.jpg">';
             }
             if (inputunit == "feet") {
                 if (outputunit == "inch"){
