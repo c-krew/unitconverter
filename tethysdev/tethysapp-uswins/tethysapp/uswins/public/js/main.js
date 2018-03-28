@@ -127,12 +127,13 @@ function init_map(){
                         error: function (status) {
 
                         }, success: function (response) {
-                                console.log(response['dates'])
+                                console.log(response['dates'][0])
                                 console.log(response['two'])
                                 console.log(response['ten'])
                                 console.log(response['twenty'])
 
-                                var tabl = document.getElementsByClassName("perctable")[0];
+                                var tabl = document.getElementById("table");
+                                tabl.innerHTML= response['dates']
                                 var rows = response;
 
                                 for (i = 0; i < rows.length; i++) {
@@ -140,9 +141,9 @@ function init_map(){
                                   console.log(i)
 //                                  tabl.append(
 //                                    '<tr>' +
-//                                        '<td>' + i + '</td>' +
-//                                        '<td>' + columns[0] + '</td>' +
-//                                        '<td>' + columns[1] + '</td>' +
+//                                        <td>' + columns[0] + '</td>' +
+//                                        '<td>' + columns[1'<td>' + i + '</td>' +
+//                                        '] + '</td>' +
 //                                        '<td>' + columns[2] + '</td>' +
 //                                        '<td>' + columns[3] + '</td>' +
 //                                        '<td>' + columns[4] + '</td>' +
