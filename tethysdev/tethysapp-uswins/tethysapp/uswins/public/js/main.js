@@ -106,6 +106,12 @@ function init_map(){
     /*when the element is clocked, the "goToUrl" function is used, see first function*/
     map.on("singleclick",function(evt) {
 
+            $("#obsgraph").modal('show');
+            $('#observed-chart').addClass('hidden');
+            $('#obsdates').addClass('hidden');
+            $('#observed-loading').removeClass('hidden');
+            $("#station-info").empty()
+
             var view = map.getView();
             var viewProjection = view.getProjection();
             var viewResolution = view.getResolution();
@@ -123,45 +129,21 @@ function init_map(){
                         url: '/apps/uswins/forecastpercent/',
                         type: 'GET',
                         data: {'comid' : comid},
-                        contentType: 'application/json',
-                        error: function (status) {
+                        error: function () {
+                            $('#info').html('<p class="alert alert-danger" style="text-align: center"><strong>An unknown error occurred while retrieving the forecast</strong></p>');
+                            $('#info').removeClass('hidden');
 
-                        }, success: function (response) {
-                                console.log(response['dates'][0])
-                                console.log(response['two'])
-                                console.log(response['ten'])
-                                console.log(response['twenty'])
-
-                                var tabl = document.getElementById("table");
-                                tabl.innerHTML= response['dates']
-                                var rows = response;
-
-                                for (i = 0; i < rows.length; i++) {
-                                  columns = rows[i];
-                                  console.log(i)
-//                                  tabl.append(
-//                                    '<tr>' +
-//                                        <td>' + columns[0] + '</td>' +
-//                                        '<td>' + columns[1'<td>' + i + '</td>' +
-//                                        '] + '</td>' +
-//                                        '<td>' + columns[2] + '</td>' +
-//                                        '<td>' + columns[3] + '</td>' +
-//                                        '<td>' + columns[4] + '</td>' +
-//                                        '<td>' + columns[5] + '</td>' +
-//                                        '<td>' + columns[6] + '</td>' +
-//                                        '<td>' + columns[7] + '</td>' +
-//                                        '<td>' + columns[8] + '</td>' +
-//                                        '<td>' + columns[9] + '</td>' +
-//                                        '<td>' + columns[10] + '</td>' +
-//                                        '<td>' + columns[11] + '</td>' +
-//                                        '<td>' + columns[12] + '</td>' +
-//                                        '<td>' + columns[13] + '</td>' +
-//                                        '<td>' + columns[14] + '</td>' +
-//                                        '<td>' + columns[15] + '</td>' +
-//                                    '</tr>'
-//                                  );
-                                }
-
+                            setTimeout(function () {
+                                $('#info').addClass('hidden')
+                            }, 5000);
+                        },
+                        success: function (data) {
+                            if (!data.error) {
+                                $('#observed-loading').addClass('hidden');
+                                $('#dates').removeClass('hidden');
+                                $('#observed-chart').removeClass('hidden');
+                                $('#observed-chart').html(data);
+                            }
                         }
                    })
 
@@ -191,6 +173,37 @@ function append(){
 
         }, success: function (response) {
 
+        }
+    })
+}
+
+function get_station_info (dates,two,ten,twenty) {
+    $("#obsgraph").modal('show');
+    $('#observed-chart').addClass('hidden');
+    $('#obsdates').addClass('hidden');
+    $('#observed-loading').removeClass('hidden');
+    $("#station-info").empty()
+
+    $.ajax({
+        url: '/apps/uswins/get-station-data',
+        type: 'GET',
+        data: {'dates':dates,'two':two,'ten':ten,'twenty':twenty},
+        error: function () {
+            $('#info').html('<p class="alert alert-danger" style="text-align: center"><strong>An unknown error occurred while retrieving the forecast</strong></p>');
+            $('#info').removeClass('hidden');
+
+            setTimeout(function () {
+                $('#info').addClass('hidden')
+            }, 5000);
+        },
+        success: function (data) {
+            if (!data.error) {
+                $('#observed-loading').addClass('hidden');
+                $('#dates').removeClass('hidden');
+//                $('#obsdates').removeClass('hidden');
+                $('#observed-chart').removeClass('hidden');
+                $('#observed-chart').html(data);
+            }
         }
     })
 }

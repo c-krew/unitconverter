@@ -1,16 +1,21 @@
 from django.http import JsonResponse, Http404, HttpResponse
+from django.shortcuts import render
 import netCDF4 as nc
 from netCDF4 import *
 import pandas as pd
 import datetime
 import ast
 import requests
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from tethys_sdk.gizmos import *
+from django.http import HttpResponse, JsonResponse
+import requests
+
 
 
 def forecastpercent(request):
-    return_obj = {
-        'success': True
-    }
+
 
     # Check if its an ajax post request
     if request.is_ajax() and request.method == 'GET':
@@ -51,9 +56,7 @@ def forecastpercent(request):
                 rivers[key][q] = []
 
             length = len(timeall)
-            print(rivid)
             riv_index = rivid.tolist().index(reach)
-            print(riv_index)
             for b in range(0, length):
                 flow = ncf.variables['Qout'][riv_index][b]
                 time = timeall[b]
@@ -101,13 +104,30 @@ def forecastpercent(request):
         for d in rivpercorder['twenty']:
             rivperctwenty.append(d[1])
 
-        return_obj = {
-            'success': True,
-            'dates':rivdates,
-            'two':rivperctwo,
-            'ten':rivpercten,
-            'twenty':rivperctwenty
+        formatteddates = [str(elem)[-4:] for elem in rivdates]
+        formattedtwo = ["%.2f" % elem for elem in rivperctwo]
+        formattedten = ["%.2f" % elem for elem in rivpercten]
+        formattedtwenty = ["%.2f" % elem for elem in rivperctwenty]
+
+    try:
+
+
+        table_view = TableView(column_names=formatteddates,
+                               rows=[formattedtwo,
+                                     formattedten,
+                                     formattedtwenty],
+                               hover=True,
+                               striped=True,
+                               bordered=True,
+                               condensed=True,
+                               row_ids=['two','ten','twenty'])
+
+        context = {
+            'gizmo_object': table_view,
         }
 
+        return render(request,'uswins/gizmo_ajax.html', context)
 
-    return JsonResponse(return_obj)
+    except Exception as e:
+        print str(e)
+        return JsonResponse({'error': 'No historic data found for calculating flow duration curve.'})

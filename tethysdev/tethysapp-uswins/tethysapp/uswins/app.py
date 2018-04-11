@@ -44,6 +44,11 @@ class Uswins(TethysAppBase):
                 url='uswins/forecastpercent',
                 controller='uswins.ajax_controllers.forecastpercent'
             ),
+            UrlMap(
+                name='get_station_data',
+                url='uswins/get-station-data',
+                controller='uswins.controllers.get_station_data'
+            ),
         )
 
         return url_maps
